@@ -21,7 +21,7 @@ void Powerpal::dump_config() {
 void Powerpal::setup() {
   this->authenticated_ = false;
   this->pulse_multiplier_ = ((seconds_in_minute * this->reading_batch_size_[0]) / (this->pulses_per_kwh_ / kw_to_w_conversion));
-  ESP_LOGD(TAG, "pulse_multiplier_: %f", this->pulse_multiplier_ );
+  ESP_LOGI(TAG, "pulse_multiplier_: %f", this->pulse_multiplier_ );
 
 #ifdef USE_HTTP_REQUEST
     this->stored_measurements_.resize(1); //TODO dynamic
@@ -84,9 +84,9 @@ void Powerpal::parse_measurement_(const uint8_t *data, uint16_t length) {
 
     // float total_kwh_within_interval = pulses_within_interval / this->pulses_per_kwh_;
     float avg_watts_within_interval = pulses_within_interval * this->pulse_multiplier_;
-    
-    ESP_LOGI(TAG, "Timestamp: %ld, Pulses: %d, Average Watts within interval: %f W", unix_time, pulses_within_interval,
-             avg_watts_within_interval);
+
+    ESP_LOGI(TAG, "Timestamp: %ld, Pulses: %d, Average Watts within interval: %f W, Daily Pulses: %d", unix_time, pulses_within_interval,
+             avg_watts_within_interval, daily_pulses_);
 
     if (this->power_sensor_ != nullptr) {
       this->power_sensor_->publish_state(avg_watts_within_interval);
@@ -122,6 +122,9 @@ void Powerpal::parse_measurement_(const uint8_t *data, uint16_t length) {
       float energy = this->daily_pulses_ / this->pulses_per_kwh_;
       this->daily_energy_sensor_->publish_state(energy);
 
+      if (this->daily_pulses_sensor_ != nullptr) {
+      this->daily_pulses_sensor_->publish_state(daily_pulses_);
+      }
       // if esphome device has a valid time component set up, use that (preferred)
       // else, use the powerpal measurement timestamps
 #ifdef USE_TIME
@@ -203,7 +206,7 @@ std::string Powerpal::serial_to_apikey_(const uint8_t *data, uint16_t length) {
 //     //WiFiClientSecure wifiClient;
 //     //wifiClient.setInsecure();
 //     //HTTPClient http;
-//     //HttpClient(wifiClient, serverAddress, port);  
+//     //HttpClient(wifiClient, serverAddress, port);
 //     //http.setTimeout(5000);
 //     //http.useHTTP10(true);
 //     //http.begin(wifiClient, serverAddress);
