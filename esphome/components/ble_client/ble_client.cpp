@@ -92,7 +92,7 @@ void BLEClient::connect() {
   }
 }
 
-void BLEClient::gattc_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t esp_gattc_if,
+bool BLEClient::gattc_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t esp_gattc_if,
                                     esp_ble_gattc_cb_param_t *param) {
   if (event == ESP_GATTC_REG_EVT && this->app_id != param->reg.app_id)
     return;
