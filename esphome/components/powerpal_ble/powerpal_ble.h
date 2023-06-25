@@ -46,7 +46,17 @@ static const espbt::ESPBTUUID POWERPAL_CHARACTERISTIC_SERIAL_UUID =
 static const espbt::ESPBTUUID POWERPAL_BATTERY_SERVICE_UUID = espbt::ESPBTUUID::from_uint16(0x180F);
 static const espbt::ESPBTUUID POWERPAL_BATTERY_CHARACTERISTIC_UUID = espbt::ESPBTUUID::from_uint16(0x2A19);
 
-
+// time: '59DA0004-12F4-25A6-7D4F-55961DCE4205',
+// ledSensitivity: '59DA0008-12F4-25A6-7D4F-55961DCE4205',
+// uuid: '59DA0009-12F4-25A6-7D4F-55961DCE4205',
+// serialNumber: '59DA0010-12F4-25A6-7D4F-55961DCE4205',
+// pairingCode: '59DA0011-12F4-25A6-7D4F-55961DCE4205',
+// measurement: '59DA0001-12F4-25A6-7D4F-55961DCE4205',
+// pulse: '59DA0003-12F4-25A6-7D4F-55961DCE4205',
+// millisSinceLastPulse: '59DA0012-12F4-25A6-7D4F-55961DCE4205',
+// firstRec: '59DA0005-12F4-25A6-7D4F-55961DCE4205',
+// measurementAccess: '59DA0002-12F4-25A6-7D4F-55961DCE4205',
+// readingBatchSize: '59DA0013-12F4-25A6-7D4F-55961DCE4205',
 
 static const uint8_t seconds_in_minute = 60;    // seconds
 static const float kw_to_w_conversion = 1000.0;    // conversion ratio
